@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: latin1 -*-
 
-"""Gerneral Importresource Feeder for bfabric
+"""General Importresource Feeder for bfabric
 
 Author:
     Christian Panse <cp@fgcz.ethz.ch>, 2012-2024
@@ -12,7 +12,7 @@ Usage:
     $ echo "906acd3541f056e0f6d6073a4e528570;1345834449;46342144;p996/Proteomics/TRIPLETOF_1/jonas_20120820_SILAC_comparison/ 20120824_01_NiKu_1to5_IDA_rep2.wiff" | bfabric_save_importresource_sample.py - 
 
 History:
-    The first version of the scrpt appeared on Wed Oct 24 17:02:04 CEST 2012. 
+    The first version of the script appeared on Wed Oct 24 17:02:04 CEST 2012. 
 """
 
 
@@ -38,12 +38,11 @@ logger.setLevel(logging.INFO)
 bfabric_storageid = 2
 bfapp = Bfabric()
 
-# TODO(cp): should go into a config file, e.g., bfabricrc
-# the hash  maps the 'real world' to the BFabric application._id
-if bfapp.application is None:
-    raise("No bfapp.application variable configured. check '~/.bfabricrc.py' file!")
-print (bfapp.application)
-bfabric_application_ids = bfapp.application
+# maps the 'real world' to the BFabric application._id
+if bfapp.config.application_ids is None:
+    raise RuntimeError("No bfapp.config.application_ids variable configured. check '~/.bfabricrc.py' file!")
+print(bfapp.config.application_ids)
+bfabric_application_ids = bfapp.config.application_ids
 
 def save_importresource(line):
     """ reads, splits and submit the input line to the bfabric system
